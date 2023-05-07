@@ -37,6 +37,8 @@ dependencies:
   firebase_core: ^2.7.0
   cloud_firestore: ^4.4.3
   equatable:
+  http:
+  get_it:
   bloc: ^7.0.0
   flutter_bloc: ^7.0.0
   cached_network_image:
