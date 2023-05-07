@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:test_clean_architecture/features/auth/view/bloc/sign_up_bloc.dart';
-import 'package:test_clean_architecture/features/showProduct/view/screens/home_page.dart';
+import 'package:test_clean_architecture/features/auth/view/bloc/auth_bloc.dart';
 
 import 'features/auth/di.dart' as di;
+import 'features/auth/view/auth_screen/sign_up_screen.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -19,7 +19,8 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const MaterialApp(
-      home: MyHomePage(),
+      debugShowCheckedModeBanner: false,
+      home: SignUp(),
     );
   }
 }

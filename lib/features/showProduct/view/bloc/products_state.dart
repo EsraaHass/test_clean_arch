@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:test_clean_architecture/features/showProduct/domain/entites/product.dart';
+import 'package:test_clean_architecture/features/showProduct/data/models/productsResponse.dart';
 
 abstract class ProductsState extends Equatable {
   @override
@@ -15,7 +15,7 @@ class ErrorProductState extends ProductsState {
 }
 
 class GetProductState extends ProductsState {
-  List<ProductEntite> products;
+  ProductsResponse products;
 
   GetProductState({required this.products});
 }

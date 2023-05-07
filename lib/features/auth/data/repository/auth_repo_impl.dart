@@ -8,9 +8,8 @@ class AuthRepoImple implements AuthRepo {
   AuthRepoImple(this.authRemoteDataSource);
 
   @override
-  Future<void> signIn(String email, String pass) {
-    // TODO: implement signIn
-    throw UnimplementedError();
+  Future<String> signIn(String email, String pass) async {
+    return await authRemoteDataSource.signIn(email, pass);
   }
 
   @override

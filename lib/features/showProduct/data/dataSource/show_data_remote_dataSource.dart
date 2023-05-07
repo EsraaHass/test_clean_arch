@@ -1,20 +1,17 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:test_clean_architecture/features/showProduct/data/models/product_model.dart';
+import 'dart:convert';
 
-abstract class ShowDataRemoteDataSource {
-  Future<List<ProductModel>> getMainProduct();
-}
+import 'package:http/http.dart' as http;
+import 'package:test_clean_architecture/core/helpers/api_helpers.dart';
+import 'package:test_clean_architecture/features/showProduct/data/models/productsResponse.dart';
 
-class ShowDataRemoteDataSourceImpl implements ShowDataRemoteDataSource {
-  final firestore = FirebaseFirestore.instance.collection('product');
-
+class ShowDataRemoteDataSource {
   @override
-  Future<List<ProductModel>> getMainProduct() async {
-    var data = await firestore.get();
-    var products = data.docs
-        .map((product) => ProductModel.fromJson(product.data()))
-        .toList();
-
-    return products;
+  static Future<ProductsResponse> getMainProduct() async {
+    var url = Uri.parse(ApiHelpers.Base_Url + EndPoints.products);
+    var response = await http.get(url);
+    var responseBody = response.body;
+    var json = jsonDecode(responseBody);
+    var productResponse = ProductsResponse.fromJson(json);
+    return productResponse;
   }
 }

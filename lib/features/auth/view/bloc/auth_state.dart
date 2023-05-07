@@ -14,3 +14,11 @@ class ErrorSignUpState extends AuthState {
 }
 
 class SignUpState extends AuthState {}
+
+class ErrorSignInState extends AuthState {
+  String errorMessage;
+
+  ErrorSignInState(this.errorMessage);
+}
+
+class SignInState extends AuthState {}

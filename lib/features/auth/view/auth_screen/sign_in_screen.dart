@@ -1,25 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:test_clean_architecture/core/constant/dialog.dart';
-import 'package:test_clean_architecture/features/auth/data/models/user_model.dart';
-import 'package:test_clean_architecture/features/auth/view/auth_screen/sign_in_screen.dart';
+import 'package:test_clean_architecture/features/auth/di.dart' as di;
+import 'package:test_clean_architecture/features/auth/view/auth_screen/sign_up_screen.dart';
 import 'package:test_clean_architecture/features/auth/view/bloc/auth_event.dart';
 import 'package:test_clean_architecture/features/auth/view/bloc/auth_state.dart';
 import 'package:test_clean_architecture/features/showProduct/view/screens/home_page.dart';
 
 import '../bloc/auth_bloc.dart';
 
-class SignUp extends StatefulWidget {
-  const SignUp({Key? key}) : super(key: key);
+class SignIn extends StatefulWidget {
+  const SignIn({Key? key}) : super(key: key);
 
   @override
-  State<SignUp> createState() => _SignUpState();
+  State<SignIn> createState() => _SignInState();
 }
 
-class _SignUpState extends State<SignUp> {
-  final name = TextEditingController();
+class _SignInState extends State<SignIn> {
   final email = TextEditingController();
-  final phone = TextEditingController();
   final pass = TextEditingController();
   late AuthBloc bloc;
 
@@ -31,16 +29,16 @@ class _SignUpState extends State<SignUp> {
 
   @override
   Widget build(BuildContext context) {
-    // final cubit = di.sl<AuthBloc>();
+    final cubit = di.sl<AuthBloc>();
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Register'),
+        title: const Text('Login'),
       ),
       body: BlocConsumer<AuthBloc, AuthState>(
         listener: (context, state) {
           if (state is AuthInitialState) {
             showLoadingDialog(context, 'Loading...');
-          } else if (state is SignUpState) {
+          } else if (state is SignInState) {
             Navigator.push(
                 context, MaterialPageRoute(builder: (_) => const MyHomePage()));
           }
@@ -52,13 +50,7 @@ class _SignUpState extends State<SignUp> {
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   TextFormField(
-                    controller: name,
-                  ),
-                  TextFormField(
                     controller: email,
-                  ),
-                  TextFormField(
-                    controller: phone,
                   ),
                   TextFormField(
                     controller: pass,
@@ -68,22 +60,16 @@ class _SignUpState extends State<SignUp> {
                   ),
                   ElevatedButton(
                       onPressed: () async {
-                        UserModel model = UserModel(
-                          id: 1,
-                          name: name.text,
-                          email: email.text,
-                          phone: phone.text,
-                          image: '',
-                        );
-                        bloc.add(SignUpEvent(model, pass.text));
+                        bloc.add(SignInEvent(email.text, pass.text));
                       },
-                      child: const Text('Register')),
+                      child: const Text('Login')),
                   TextButton(
                       onPressed: () {
                         Navigator.push(context,
-                            MaterialPageRoute(builder: (_) => const SignIn()));
+                            MaterialPageRoute(builder: (_) => const SignUp()));
                       },
-                      child: const Text('already have account ? Login')),
+                      child:
+                          const Text('Dont have any account ? Register now.')),
                 ],
               ),
             ),
